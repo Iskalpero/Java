@@ -1,0 +1,2 @@
+﻿notepad++/notepad를 사용해 작성하고
+cmd환경에서 간단한 예제

@@ -1,0 +1,19 @@
+
+public class OperatorEx7 {
+	
+	public static void main(String[] args) {
+		
+		
+		byte a = 10;
+		byte b = 30;
+		
+		byte c = (byte)(a*b);
+		
+		// why result 44?
+		// a*b = 300, but byte use a -127~128 (Overflow)
+				
+		System.out.println(c);;
+		
+		
+	}
+}

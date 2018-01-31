@@ -28,7 +28,7 @@ public class FlowEx2 {
 		
 		System.out.printf("입력하신 숫자는 %d 입니다.", input);
 		
-		
+		scanner.close();
 	}
 
 }

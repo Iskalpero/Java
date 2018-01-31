@@ -21,5 +21,6 @@ public class FlowEx1 {
 		if(!(x==0)) System.out.println("!(x==0)");
 		if(!(x!=0)) System.out.println("!(x!=0)");
 		
+		
 	}
 }

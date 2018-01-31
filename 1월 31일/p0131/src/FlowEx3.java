@@ -25,6 +25,7 @@ public class FlowEx3 {
 		//if you write a zero, result a first if~ execute,
 		// if not, result a secone if~ execute
 		
+		scanner.close();
 	}
 
 }

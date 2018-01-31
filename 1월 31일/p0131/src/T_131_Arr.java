@@ -14,7 +14,8 @@ public class T_131_Arr {
 		
 		
 		int i,j;
-		
+		int total;
+		double avr;
 		
 		for(i = 0; i < 3; i++) {
 			
@@ -22,11 +23,25 @@ public class T_131_Arr {
 			Stu_Score[i][0] = sc.nextLine();
 			System.out.println("순서대로, 국어, 수학, 영어 점수입니다. 각각 입력하시고 Enter키를 눌러주세요 ");
 			System.out.println("숫자를 입력하셔야 합니다.");
-			for(j=1; j< 7; j++) {
+			
+			for(j=1; j< 4; j++) {
 				Stu_Score[i][j] = sc.nextLine();
-				
 			}
+			
+			total = Integer.parseInt(Stu_Score[i][1])
+					+ Integer.parseInt(Stu_Score[i][2])
+					+ Integer.parseInt(Stu_Score[i][3]);
+			
+			Stu_Score[i][4] = Integer.toString(total);
+			
+			avr = (float)(total)/3.0;
+			
+			Stu_Score[i][5] = Double.toString(avr);
+			Stu_Score[i][6] = "1";
+			//초기값은 1로함.
 		}
+		
+		
 		
 		
 		/*

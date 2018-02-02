@@ -22,8 +22,8 @@ public class T_0131 {
 		 */
 		
 		// 변수 입력만으로 3명의 등수 및 점수, 평균, 총점을 출력시켜본다.
-		
-		int Math_S1 = 0, Kor_S1 = 0, Eng_S1 = 0;
+				
+		int Math_S1 = 0, Kor_S1 = 0, Eng_S1 = 0;		
 		int Math_S2 = 0, Kor_S2 = 0, Eng_S2 = 0;
 		int Math_S3 = 0, Kor_S3 = 0, Eng_S3 = 0;
 		

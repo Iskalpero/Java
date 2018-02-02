@@ -20,7 +20,7 @@ public class T_131_Arr {
 		
 		1. 학생수를 동적으로 입력받아 동적 2차원 배열을 사용
 		2. 이전 문제와 똑같은 추가점.
-		3. 등수구별을 순차정렬로 완성.
+		3. 등수구별을 순차정렬로 완성. 
 			
 		앞으로 할 점
 		
@@ -64,7 +64,6 @@ public class T_131_Arr {
 				Stu_Score[i][0] = sc.nextLine();
 				//여기서 nextInt() 다음 nextLine()을 사용하면 오류가 발생해 프로그램이 정상 진행이 되지 않는다.
 				// 이유는 nextInt()에서 Enter를 칠 때 발생하는 개행문자를 처리하지 않고 버퍼에 남겨와 이런 문제가 생긴다고 한다.
-				// (http://egloos.zum.com/shardent/v/2442363)에서 찾음.
 				
 				
 				System.out.println("순서대로, 국어, 수학, 영어 점수입니다. 각각 입력하시고 Enter키를 눌러주세요 ");

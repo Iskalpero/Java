@@ -31,6 +31,7 @@ public class T_131_Arr {
 		오류
 		
 		1. 총점이 같은 사람이 3명 이상일 경우, 국어점수가 높은순으로 배열되지 않을 때가 있다.(주말에 수정)
+		2. 학생 수를 2명으로 할 경우 동일 점수 시 국어점수로 등수를 구별해주지 못함.(수정완료)
 		*/		
 		
 		// 위의 문제를 배열로
@@ -112,13 +113,29 @@ public class T_131_Arr {
 						Stu_Score[1] = temp;
 						Stu_Score[1][6] = Integer.toString(Rank);
 						break;
-					}
-					else {
-						if(Integer.parseInt(Stu_Score[0][1]) == Integer.parseInt(Stu_Score[1][1])
-								&& Integer.parseInt(Stu_Score[0][4]) == Integer.parseInt(Stu_Score[1][4])) {
+					} // 총점 차이가 날 경우
+					else if(Integer.parseInt(Stu_Score[0][4]) == Integer.parseInt(Stu_Score[1][4])){
+						if(Integer.parseInt(Stu_Score[0][1]) == Integer.parseInt(Stu_Score[1][1])) {
 							Stu_Score[0][6] = Integer.toString(Rank);
 							Stu_Score[1][6] = Integer.toString(Rank);
 						}
+						else if(Integer.parseInt(Stu_Score[0][1]) > Integer.parseInt(Stu_Score[1][1])){
+								Stu_Score[0][6] = Integer.toString(Rank);
+								Rank++;
+						}
+						else {
+							temp = Stu_Score[0];
+							Stu_Score[0] = Stu_Score[1];
+							Stu_Score[0][6] = Integer.toString(Rank);
+							Rank++;
+							Stu_Score[1] = temp;
+							Stu_Score[1][6] = Integer.toString(Rank);
+							break;							
+						}
+					} // 총점이 둘 다 같을 때 국어점수로 구별
+					else {
+						Stu_Score[0][6] = Integer.toString(Rank);
+						Rank++;
 					}
 					// 2명일 경우 두번째 것만 비교 대상이므로 바로 임시에 기록.
 				}
@@ -132,6 +149,8 @@ public class T_131_Arr {
 								Strong_Number = j+1;
 							}
 							//작으면 별 절차없이 다음으로.
+							else
+								Strong_Number = j;
 						}
 						else {
 							//끝까지 다돌았을 경우 연산
@@ -167,7 +186,11 @@ public class T_131_Arr {
 					}
 				}
 			}
-			Stu_Score[i-1][6] = Integer.toString(Rank);
+			if(Stu_Score.length > 2)
+				Stu_Score[i-1][6] = Integer.toString(Rank);
+			else if(Stu_Score.length == 2);				
+			else
+				Stu_Score[0][6] = Integer.toString(Rank);
 						
 			//등수 알고리즘. 총점으로 등수 판단, 동점수 시 국어점수 높은순으로.
 			//순서 정렬(?)

@@ -27,7 +27,7 @@ public class ArrayEx10 {
 					numArr[j] = numArr[j+1];
 					numArr[j+1] = temp;
 					changed = true; // 자리바꿈이 발생 change = true.
-					
+					// 오류발생을 막기 위해 boolean으로 체크하는형식.
 				}
 			} //end for j
 			

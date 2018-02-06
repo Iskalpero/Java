@@ -2,9 +2,10 @@ import java.util.*;
 
 class Student{
 	
-	private int math,kor,eng,total,rank;
-	private float avr;
-	private String name = null;
+	int math,kor,eng,total;
+	float avr;
+	String name = null;
+	int Rank = 1;
 	//private 선언으로 이제 set,get와 생성자일 떄를 제외하고는 변수에 접근할 수 없다.
 	Student(String name, int kor, int math, int eng){
 		
@@ -14,16 +15,16 @@ class Student{
 		this.eng = eng;
 		this.total = kor+math+eng;
 		this.avr = (float)(this.total/3.0);
-		
 	}
-	void setRank(int rank) { this.rank = rank;}
+	
+	void setRank(int Rank) { this.Rank = Rank;}
 	int getTotal() { return total;}
 	float getAvr() { return avr;}
 	String getName() { return name;}
 	int getKor() {return kor;}
 	int getMath() {return math;}
 	int getEng() {return eng;}
-	int getRank() {return rank;}
+	int getRank() {return Rank;}
 	
 	// get,set으로 값을 일부 받고 출력하고
 	// 생성자 Student를 통해 Rank를 제외한 모든값을 받고 avg,total 연산을 구현
@@ -44,7 +45,8 @@ class Student{
 1. 학생수 & 학생명, 점수들을 입력받아 사용(배열사용에서는 String으로 받음 ->  2/2는 클래스를 이용)
 2. 알고리즘 변형 ( 초기 if~else(1/31) -> 배열사용 때 순차정렬(2/2일 이상태로 완료)
 3. 점수 조건은 모두 총점이 높은순, 동일 총점 시 국어 점수가 높은 순으로.
-4. 등수문제 2차 수정
+4. 등수문제 2차 수정(2/2)
+5. 메서드를 이용해 타이핑 줄 수를 줄여봄(2/6)
 
 // 객체지향으로 할 때 get/set으로 변수를 출력/저장하는 것에 익숙해지고, 클래스 변수를 private하는 것 또한 익숙해져야함.
 
@@ -57,7 +59,8 @@ class Student{
 ※ 다음 확장 때 생각할 만한것
 
 1. 학생 수 및 점수자료를 파일 입출력을 이용해서 구현
-2. 항상 하면서 가독성을 높일 수 있도록 한다.
+2. 학점형식으로 2차구분( ex 상위 10퍼센트까지 : A 상위 10~50 : B , 상위 60~80: C , 나머지 : D) 
+3. 항상 하면서 가독성을 높일 수 있도록 한다.
 
 */
 
@@ -66,12 +69,11 @@ public class T0202_CL {
 
 	public static void main(String[] args) {
 		
-		int i,j,Rank = 1;
+		int i,j,rank=1;
 		int Student_Number;
 		Scanner sc = new Scanner(System.in);
 		String name_copy = null;
 		Student stu[];
-		int Strong_Number = 0;
 		System.out.printf("학생 수를 숫자로 입력해 주세요 : ");
 		
 		Student_Number = sc.nextInt();
@@ -105,125 +107,87 @@ public class T0202_CL {
 		}
 		// 학생이름, 점수, 평균, 총점을 배열에 대입시킴
 		
-		Student temp;
 		
+		// bubble sorting 
 		
-		for(i=0; i<stu.length; i++) {
-				
+		for(i=stu.length-1; i>0; i--) {
+			if(stu.length <2) {
+				stu[0].setRank(rank);
+				break;				
+			}
 			if(stu.length == 2) { //길이가 2일때(Student numbers == 2)
-					
+			
 				if(stu[0].getTotal() < stu[1].getTotal()){ // 두 번째 학생의 
-					temp = stu[0];
-					stu[0] = new Student(stu[1].getName(), stu[1].getKor(), stu[1].getMath(), stu[1].getEng());
-					stu[0].setRank(Rank);
-					Rank++;
-					stu[1] = new Student(temp.getName(), temp.getKor(), temp.getMath(), temp.getEng());
-					stu[1].setRank(Rank);
-					break;
+					Winner(stu[0],stu[1]);
+					rank++;
+					stu[1].setRank(rank);					
 				}
 				else if(stu[0].getTotal() == stu[1].getTotal()){
-					if(stu[0].getKor() == stu[1].getKor()) {
-						stu[0].setRank(Rank);
-						stu[1].setRank(Rank);
-					}
-					else if(stu[0].getKor() > stu[1].getKor()){
-							stu[0].setRank(Rank);
-							Rank++;
-					}
+					if(stu[0].getKor() == stu[1].getKor());
+					else if(stu[0].getKor() > stu[1].getKor());
 					else {
-						temp = stu[0];
-						stu[0] = new Student(stu[1].getName(), stu[1].getKor(), stu[1].getMath(), stu[1].getEng());
-						stu[0].setRank(Rank);
-						Rank++;
-						stu[1] = new Student(temp.getName(), temp.getKor(), temp.getMath(), temp.getEng());
-						stu[1].setRank(Rank);
-						break;					
+						Winner(stu[0],stu[1]);
+						rank++;
+						stu[1].setRank(rank);
 					}
 				} // 총점이 둘 다 같을 때 국어점수로 구별
 				else {
-					stu[0].setRank(Rank);
-					Rank++;
-				}
+					rank++;
+					stu[1].setRank(rank);
+				} // 2명일 때는 이전과 동일 ... the same code when student below two case;
 			}
 			else {
-				for(j=i+1; j<stu.length; j++) {
-					if(j+1 <= stu.length-1) {
-						// 마지막 까지 비교가 덜됬을때 
-							if(stu[j].getTotal() < stu[j+1].getTotal()) {
-								// 크면 젤 큰 값과 위치를 기억해둬라.
-								Strong_Number = j+1;
-							}
-							//작으면 별 절차없이 다음으로.
-							else if(stu[j].getTotal() == stu[j+1].getTotal()) {
-								if(stu[j].getKor() < stu[j+1].getKor())
-									Strong_Number = j+1;
-								else;
-							}
-							else
-								Strong_Number = j;
+				
+				for(j = stu.length-i-1; j > 0 + i; j--) { //오른쪽부터 보는순서, 큰 걸 왼쪽으로 이동시켜야한다. 즉 i가 j보다 크면 swap으로 위치이동을 해야한다.
+					
+					if(stu[i].getTotal() > stu[j].getTotal()) { // i가 j보다 총점이 클 때
+						Winner(stu[i],stu[j]);
+					}
+					
+					else if(stu[i].getTotal() == stu[j].getTotal()) {
+						
+						if(stu[i].getKor() > stu[j].getKor()) {
+							Winner(stu[i],stu[j]);
+						}
+						else if(stu[i].getKor() == stu[j].getKor()) {
+										// 중복카운트 되게				
+						}
+						else;
+						
 					}
 					else {
-						//끝까지 다돌았을 경우 연산
-						if(stu[i].getTotal() < stu[Strong_Number].getTotal()){
-							//i행의 총점수가 Strong_Number행의 총점수보다 낮을때.
-							temp = stu[i];
-							stu[i] = new Student(stu[Strong_Number].getName(), stu[Strong_Number].getKor(), stu[Strong_Number].getMath(),
-									stu[Strong_Number].getEng());
-							stu[i].setRank(Rank);
-							Rank++;
-							stu[Strong_Number] = new Student(temp.getName(), temp.getKor(), temp.getMath(), temp.getEng());
-						}
-						else if(stu[i].getTotal()== stu[Strong_Number].getTotal()) {
-							//i행의 총점수가 Strong_Number행의 총점수보다 같거나 높을때
-							if(stu[i].getKor() == stu[Strong_Number].getKor()) {
-								stu[i].setRank(Rank);
-								stu[Strong_Number].setRank(Rank);
-								Rank++;
-							}
-							 // 평균이 둘다 같고 국어점수까지 같을 경우
-							else if(stu[i].getKor() < stu[Strong_Number].getKor()) {
-									stu[i].setRank(Rank);
-									Rank++;
-									i++;
-									temp = stu[i];
-									stu[i] = new Student(stu[Strong_Number].getName(), stu[Strong_Number].getKor(), stu[Strong_Number].getMath(),
-											stu[Strong_Number].getEng());
-									stu[i].setRank(Rank);
-									Rank++;								
-									stu[Strong_Number] = new Student(temp.getName(), temp.getKor(), temp.getMath(), temp.getEng());
-							} // 평균이 같고 국어점수가 stu배열의 Strong_Number번째 값의 국어점수가 더 클 경우.
-							else {
-								stu[i].setRank(Rank);
-								Rank++;
-							}// 평균이 같고 국어점수가 i번쨰값이 더 큰 경우
-									
-						}
-						else {
-							stu[i].setRank(Rank);
-							Rank++;
-						}
-					}
-				}
+						Winner(stu[i],stu[j]);
+					}	
+				}// for문 끝. 
+				stu[j].setRank(rank);
+				rank++;				
 			}
 		}
-			//등수 알고리즘. 총점으로 등수 판단, 동점수 시 국어점수 높은순으로.
-			//순서 정렬(?)
-		if(stu.length > 2)
-			stu[i-1].setRank(Rank);
-		else if(stu.length == 2);				
-		else
-			stu[0].setRank(Rank);
+		
+		
 		
 		for(i=0; i<stu.length; i++) {
 			
 			System.out.printf("이름 : %s, 국어 : %d점, 수학 : %d점 , 영어 : %d 점,"
-					+ " 총점 : %d점 , 평균 : %.2f점, 등수 : %d위\n", 
+					+ " 평균 : %.2f점 , 총점 : %d점, 등수 : %d위\n", 
 				stu[i].getName(), stu[i].getKor(), stu[i].getMath(), stu[i].getEng(), 
 				stu[i].getAvr(), stu[i].getTotal(), stu[i].getRank());
 			//등수까지 종합한 완성본을 출력	
 		}
-		
 		sc.close();
 		
+	}
+	static void Winner(Student a, Student b){   
+		//swap
+		//여기서 결과계산. //왜 static를 넣어야하는가?
+		Student temp = new Student(a.name, a.kor, a.math, a.eng);
+		
+		a.name = b.name; b.name = temp.name;
+		a.kor = b.kor;	b.kor = temp.kor;
+		a.math = b.math; b.math = temp.math;
+		a.eng = b.eng; b.eng = temp.eng;
+		a.total = b.total; b.total = temp.total;
+		a.avr = b.avr;	b.avr = temp.avr;
+		// 메서드에서 참조형으로 사용하려면 무조건 이런형식으로 접근해야한다. 
 	}
 }

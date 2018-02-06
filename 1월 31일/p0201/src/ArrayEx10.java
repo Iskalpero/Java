@@ -28,6 +28,7 @@ public class ArrayEx10 {
 					numArr[j+1] = temp;
 					changed = true; // 자리바꿈이 발생 change = true.
 					// 오류발생을 막기 위해 boolean으로 체크하는형식.
+					// 이 정렬은 가장 큰 수를 맨 먼저 우측으로 보내고
 				}
 			} //end for j
 			

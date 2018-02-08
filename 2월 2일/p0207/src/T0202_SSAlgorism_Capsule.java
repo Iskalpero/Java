@@ -1,15 +1,15 @@
-/*import java.lang.reflect.Array;
+import java.lang.reflect.Array;
 import java.util.*;
 
 class Student{
 	
-//	private int math,kor,eng,total;
-//	private float avr;	// private에 접근하기 위한 방법은 set메소드를 클래스 안에 만들고 이용 or 생성자 선언 때
-	int math,kor,eng,total;
-	float avr;
+	private int math,kor,eng,total;
+	private float avr;	// private에 접근하기 위한 방법은 set메소드를 클래스 안에 만들고 이용 or 생성자 선언 때
+//	int math,kor,eng,total;
+//	float avr;
 	
-	String name = null;
-	int Rank = 1;
+	private String name = null;
+	private int Rank = 1;
 	//private 선언으로 이제 set,get와 생성자일 떄를 제외하고는 변수에 접근할 수 없다.
 	Student(String name, int kor, int math, int eng){
 		this.name = name;
@@ -34,7 +34,7 @@ class Student{
 	  
 }
 
-
+/*
 
 문제
 
@@ -51,7 +51,7 @@ class Student{
 3. 점수 조건은 모두 총점이 높은순, 동일 총점 시 국어 점수가 높은 순으로.
 4. 등수문제 2차 수정(2/2)
 5. 메서드를 이용해 타이핑 줄 수를 줄여봄(2/6)
-6. 배열형 프로그래밍에서 나왔던 문제점인 동점자 3명 이상일 경우, 등수구별이 되지 않는 점 개선.(2/7) -> 3명기준 공동 2등 2명을 먼저 선언하고 마지막에 1등을 선언할 시  공등 2등 오류. 
+6. 배열형 프로그래밍에서 나왔던 문제점인 동점자 3명 이상일 경우, 등수구별이 되지 않는 점 개선.(2/7)  
 4. student내의 변수 형식(default->private)변경  (2/8)
 // private면 인자를 생성자일때 or Set메서드를 만들어서 해야되는데 본인이 할 때는 적용이 되지 않았다.
 // 객체지향으로 할 때 get/set으로 변수를 출력/저장하는 것에 익숙해지고, 클래스 변수를 private하는 것 또한 익숙해져야함.
@@ -73,10 +73,10 @@ class Student{
 
  
 5. MFC처럼 프로그램으로 구현. / 허용외의 경우가 나올 때 예외처리. 
-
+*/
 
 // name, kor , math , eng , total , avr, rank;
-public class T0202_SSAlgorism {
+public class T0202_SSAlgorism_Capsule {
 
 	static ArrayList<Integer> SameNote_Array; 
 	public static void main(String[] args) {
@@ -132,8 +132,8 @@ public class T0202_SSAlgorism {
 		if(stu.length == 2) { //길이가 2일때(Student numbers == 2)
 		
 			if(stu[0].getTotal() < stu[1].getTotal()){ // 두 번째 학생의 
-				Winner(stu[0],stu[1]);
-				//Winner(stu,0,1);
+				//Winner(stu[0],stu[1]);
+				Winner(stu,0,1);
 				rank++;
 				stu[1].setRank(rank);
 				
@@ -142,8 +142,8 @@ public class T0202_SSAlgorism {
 				if(stu[0].getKor() == stu[1].getKor());
 				else if(stu[0].getKor() > stu[1].getKor());
 				else {
-					Winner(stu[0],stu[1]);
-					//Winner(stu,0,1);
+					//Winner(stu[0],stu[1]);
+					Winner(stu,0,1);
 					rank++;
 					stu[1].setRank(rank);
 				}
@@ -173,16 +173,16 @@ public class T0202_SSAlgorism {
 						}
 						else {
 							SameNote_Array.clear(); // 더 큰 총점의 학생을 찾았으므로, 이전 데이터를 제거 후 시작.
-							Winner(stu[i],stu[j]);
-							//Winner(stu,i,j);
+							//Winner(stu[i],stu[j]);
+							Winner(stu,i,j);
 							SameNote_Array.add(i);
 						}
 						
 					}
 					else {
 						SameNote_Array.clear(); //위의 else문과 동일함.
-						Winner(stu[i],stu[j]);
-						//Winner(stu,i,j);
+						//Winner(stu[i],stu[j]);
+						Winner(stu,i,j);
 						SameNote_Array.add(i);
 					}
 				}// for문 (j-1)문 끝. //높은사람의 동점 정보 수집 완료.
@@ -192,8 +192,8 @@ public class T0202_SSAlgorism {
 						if(i==SameNote_Array.get(j)) {
 							stu[i].setRank(rank);
 						}
-						Winner(stu[i],stu[SameNote_Array.get(j)]);
-						//Winner(stu,i,j);
+						//Winner(stu[i],stu[SameNote_Array.get(j)]);
+						Winner(stu,i,SameNote_Array.get(j));
 						stu[i].setRank(rank);						
 					}
 					else { // 동점자가 한명 or 동점자 중 첫 번째일 경우.
@@ -216,26 +216,26 @@ public class T0202_SSAlgorism {
 		}
 		sc.close();		
 	}
-//	static void Winner(Student[] dent, int swap_i, int swap_j){   
-//		// 위의 Student 클래스의 set,get형식과 비교하면 이해할 수 있을 것이다.
-//		//swap
-//		//여기서 결과계산. 
-//		
-//		Student temp = new Student(dent[swap_i].getName(),dent[swap_i].getKor(),dent[swap_i].getMath(),dent[swap_i].getEng());
-//		dent[swap_i] = new Student(dent[swap_j].getName(), dent[swap_j].getKor(), dent[swap_j].getMath(), dent[swap_j].getEng());
-//		dent[swap_j] = new Student(temp.getName(), temp.getKor(), temp.getMath(), temp.getEng());
-//		}
-//		// 현재 이상태에서는 단순하게 stu[i]가 아닌 student a라는 거만 건드리고있어서 적용이 안된다.
-	static void Winner(Student a, Student b){
-		Student temp = new Student(a.name, a.kor, a.math, a.eng);
-		a.name = b.name; b.name = temp.name;
-		a.kor = b.kor;	b.kor = temp.kor;
-		a.math = b.math; b.math = temp.math;
-		a.eng = b.eng; b.eng = temp.eng;
-		a.total = b.total; b.total = temp.total;
-		a.avr = b.avr;	b.avr = temp.avr;
-	}// Winner 메서드 끝
+	static void Winner(Student[] dent, int swap_i, int swap_j){  
+		// 여기에 static를 붙여야하는 이유? 
+		// 위의 Student 클래스의 set,get형식과 비교하면 이해할 수 있을 것이다.
+		//swap
+		//여기서 결과계산. 
+		
+		Student temp = new Student(dent[swap_i].getName(),dent[swap_i].getKor(),dent[swap_i].getMath(),dent[swap_i].getEng());
+		dent[swap_i] = new Student(dent[swap_j].getName(), dent[swap_j].getKor(), dent[swap_j].getMath(), dent[swap_j].getEng());
+		dent[swap_j] = new Student(temp.getName(), temp.getKor(), temp.getMath(), temp.getEng());
+		}
+		// 현재 이상태에서는 단순하게 stu[i]가 아닌 student a라는 거만 건드리고있어서 적용이 안된다.
+//	static void Winner(Student a, Student b){
+//		Student temp = new Student(a.name, a.kor, a.math, a.eng);
+//		a.name = b.name; b.name = temp.name;
+//		a.kor = b.kor;	b.kor = temp.kor;
+//		a.math = b.math; b.math = temp.math;
+//		a.eng = b.eng; b.eng = temp.eng;
+//		a.total = b.total; b.total = temp.total;
+//		a.avr = b.avr;	b.avr = temp.avr;
+//	}// Winner 메서드 끝
 //		//  
 }
 
-*/

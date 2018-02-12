@@ -1,7 +1,6 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
-class Student{
+class Student{ //클래스 영역 내 변수들 = 인스턴스 변수, 메소드 내 변수들 = 지역 변수!!
 	
 	private int math,kor,eng,total;
 	private float avr;	// private에 접근하기 위한 방법은 set메소드를 클래스 안에 만들고 이용 or 생성자 선언 때
@@ -18,7 +17,7 @@ class Student{
 		this.eng = eng;
 		this.total = this.kor+this.math+this.eng;
 		this.avr = (float)(this.total/3.0);
-	} // 
+	} // 인스턴스 변수(private) 및 생성자.
 	
 	void setRank(int Rank) { this.Rank = Rank;}
 	int getTotal() { return total;}
@@ -29,7 +28,7 @@ class Student{
 	int getEng() {return eng;}
 	int getRank() {return Rank;}
 	
-	// get,set으로 값을 일부 받고 출력하고
+	// get,set으로 값을 일부 받고 출력하고 (인스턴스 메소드)
 	// 생성자 Student를 통해 Rank를 제외한 모든값을 받고 avg,total 연산을 구현
 	  
 }
@@ -53,15 +52,10 @@ class Student{
 5. 메서드를 이용해 타이핑 줄 수를 줄여봄(2/6)
 6. 배열형 프로그래밍에서 나왔던 문제점인 동점자 3명 이상일 경우, 등수구별이 되지 않는 점 개선.(2/7)  
 4. student내의 변수 형식(default->private)변경  (2/8)
-// private면 인자를 생성자일때 or Set메서드를 만들어서 해야되는데 본인이 할 때는 적용이 되지 않았다.
+// private면 인자를 생성자일때 or Set메서드를 만들어서 해야되는데 본인이 할 때는 적용이 되지 않았다.(2/8해결)
 // 객체지향으로 할 때 get/set으로 변수를 출력/저장하는 것에 익숙해지고, 클래스 변수를 private하는 것 또한 익숙해져야함.
 
-※ 작업중.
-
-1. 문제를 버블 소팅으로 바꿔보기. (일단 뒤로미룸, 순차정렬 알고리즘의 완성도를 올리자)
-2. 문제가 나옴 추가함
-
-※ 문제
+※ 버그 및 비정상적 문제
 
 
 
@@ -70,9 +64,8 @@ class Student{
 1. 학생 수 및 점수자료를 파일 입출력을 이용해서 구현 (학생목록을 파일로 읽을 수 있고, 현재 목록상태를 파일로 저장시킬 수 있어야함)
 2. 등수에다가 + 학점추가( ex 상위 10퍼센트까지 : A 상위 10~50 : B , 상위 60~80: C , 나머지 : D) 1을 하면 이걸 해야함. 
 3. 항상 하면서 가독성을 높일 수 있도록 한다. // 상시적
-
+4. MFC처럼 프로그램으로 구현. / 허용외의 경우가 나올 때 예외처리.(ex 학생수를 물을때 문자입력하면 Java에러)
  
-5. MFC처럼 프로그램으로 구현. / 허용외의 경우가 나올 때 예외처리. 
 */
 
 // name, kor , math , eng , total , avr, rank;
@@ -95,14 +88,14 @@ public class T0202_SSAlgorism_Capsule {
 		System.out.printf("학생 수를 숫자로 입력해 주세요 : ");
 		
 		Student_Number = sc.nextInt();
-		
+
 		System.out.printf("학생 수는 %d 명 입니다.\n ", Student_Number);
 		stu = new Student[Student_Number];
 		// 클래스를 이용해 객체를 배열형으로 동적 생성.
 		sc.nextLine();
-		
-		for(i = 0; i < stu.length; i++) {
 			
+		for(i = 0; i < stu.length; i++) {
+				
 			// stu 행의 길이값에 따라 for문의 반복횟수가 조정된다.
 			// 열의 길이값을 얻으려면 stu[x].length
 			System.out.printf("학생 %d의 이름 : ",i+1);
@@ -214,20 +207,23 @@ public class T0202_SSAlgorism_Capsule {
 				stu[i].getAvr(), stu[i].getTotal(), stu[i].getRank());
 			//등수까지 종합한 완성본을 출력	
 		}
-		sc.close();		
+		sc.close();
 	}
+
 	static void Winner(Student[] dent, int swap_i, int swap_j){  
-		// 여기에 static를 붙여야하는 이유? 
+		// 인스턴스 메서드를 사용하기 위한 조건은 객체가 있어야한다.(선 객체 선언 후 사용가능) ex) Test 객체 = new Test(); 객체.Winner(~,~)형식
+		// 하지만 Winner의 경우에는 인스턴스 메서드의 조건에 해당하지 못한다. 따라서 객체 선언이 없는 Winner를
+		// 사용하기 위해서는 앞에 static를 넣어 정적 메소드형태로 사용해야 한다.
 		// 위의 Student 클래스의 set,get형식과 비교하면 이해할 수 있을 것이다.
-		//swap
 		//여기서 결과계산. 
-		
+		//int a =1 ; // 지역변수.
 		Student temp = new Student(dent[swap_i].getName(),dent[swap_i].getKor(),dent[swap_i].getMath(),dent[swap_i].getEng());
 		dent[swap_i] = new Student(dent[swap_j].getName(), dent[swap_j].getKor(), dent[swap_j].getMath(), dent[swap_j].getEng());
 		dent[swap_j] = new Student(temp.getName(), temp.getKor(), temp.getMath(), temp.getEng());
-		}
+	}
 		// 현재 이상태에서는 단순하게 stu[i]가 아닌 student a라는 거만 건드리고있어서 적용이 안된다.
-//	static void Winner(Student a, Student b){
+//	static void Winner(Student a, Student b){ // 캡슐화를 하지 않고 Winner에서 Stu에 주소값에 접근해 값을 변경하는 방법
+//		//문제 캡슐화를 하지 않아 변수에 접근하기 쉬워진다. 
 //		Student temp = new Student(a.name, a.kor, a.math, a.eng);
 //		a.name = b.name; b.name = temp.name;
 //		a.kor = b.kor;	b.kor = temp.kor;
@@ -237,5 +233,6 @@ public class T0202_SSAlgorism_Capsule {
 //		a.avr = b.avr;	b.avr = temp.avr;
 //	}// Winner 메서드 끝
 //		//  
+	
 }
 

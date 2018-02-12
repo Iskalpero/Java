@@ -9,7 +9,7 @@ public class Ex_Polymorphism2 {
 		
 		car.drive();
 		fe = (FireEngine)car; // 문법적인 건 문제가 없으나, 조상타잎의 인스턴스를 자식에서 참조하는 건 허용되지 않는다.
-		// 올바르게 사용하기 위해서는 Car car = new FireEngine()와 같이 
+		// 올바르게 사용하기 위해서는 Car car = new FireEngine()와 같이 참조하는 대상을  
 		fe.drive(); 
 		car2 = fe;
 		car2.drive();

@@ -217,12 +217,18 @@ public class T0212_Capsule_Exception {
 			
 			
 			
-			for(i=0; i<stu.length; i++) {
-				
+			
+			 for(Student s : stu) { //Student를 배열로 사용해 이런형식으로도 for문이 사용 가능하다.
+				 //Student 배열 stu를 처음부터 끝까지 탐색하는 Student 객체 s
 				System.out.printf("이름 : %s, 국어 : %d점, 수학 : %d점 , 영어 : %d 점,"
 						+ " 평균 : %.2f점 , 총점 : %d점, 등수 : %d위\n", 
-					stu[i].getName(), stu[i].getKor(), stu[i].getMath(), stu[i].getEng(), 
-					stu[i].getAvr(), stu[i].getTotal(), stu[i].getRank());
+					s.getName(), s.getKor(), s.getMath(), s.getEng(), 
+					s.getAvr(), s.getTotal(), s.getRank());
+				//for(i=0; i<stu.length; i++) {
+				//System.out.printf("이름 : %s, 국어 : %d점, 수학 : %d점 , 영어 : %d 점,"
+					//	+ " 평균 : %.2f점 , 총점 : %d점, 등수 : %d위\n", 
+					//stu[i].getName(), stu[i].getKor(), stu[i].getMath(), stu[i].getEng(), 
+					//stu[i].getAvr(), stu[i].getTotal(), stu[i].getRank());
 				//등수까지 종합한 완성본을 출력	
 			}
 			sc.close();
